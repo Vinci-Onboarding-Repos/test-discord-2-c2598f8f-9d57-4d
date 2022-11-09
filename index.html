@@ -54,8 +54,9 @@
     </script>
     
     <script>
-    function dontHref(){
+    function dontHref(event){
         console.log("false")
+        console.log(event)
         event.preventDefault();
         return false;
     }
