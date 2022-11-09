@@ -10,7 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
   <script>
     window.addEventListener('load', async () => {
-        const ignore = ["WEB3_CONNECT_MODAL_ID", "template", "inputNext", "eth", "sol", "error-text", "discord", "twitter", "linkedTwitter", "linkedDiscord", "but", "completeC", "complete", "completeC1"];
+        const ignore = ["WEB3_CONNECT_MODAL_ID", "template", "inputNext", "eth", "sol", "error-text", "discord", "twitter", "linkedTwitter", "linkedDiscord", "but", "complete",  "completeC",  "completeC1"];
         var allElements = document.querySelectorAll('*[id]');
         for (var i = 0, n = allElements.length; i < n; ++i) {
             var el = allElements[i];
@@ -40,13 +40,13 @@
             addxptopath();
         }
         if(document.querySelector("#completeC") !== null){
-            let emoji = null;
+            let emoji = null
             if(emoji !== null){
                 emoji = [emoji];
             }else{
                 emoji = null;
             }
-            const completeMessage = "Olaaa";
+            const completeMessage = "Thank you for completing the onboarding! You can now close this page.";
             document.querySelector("#completeC").addEventListener("click", function(e){
                 confettiComplete(event, emoji, completeMessage)
                 e.preventDefault();
@@ -58,10 +58,7 @@
     </script>
     
     <script>
-    function dontHref(event){
-        console.log("false")
-        console.log(event)
-        event.preventDefault();
+    function dontHref(){
         return false;
     }
     </script>
@@ -112,6 +109,6 @@
         <script type="text/javascript" src="https://unpkg.com/@walletconnect/web3-provider@1.2.1/dist/umd/index.min.js"></script>
         <script type="text/javascript" src="https://unpkg.com/fortmatic@2.0.6/dist/fortmatic.js"></script>
         <script type="text/javascript" src="js/index.js"></script> 
-        <div id="template" class="root base"><img alt="background" style="background-image:url()" src="https://firebasestorage.googleapis.com/v0/b/vinci-dev-6e577.appspot.com/o/default-logo%2FleftLogo.png?alt=media" class="BrandLogo image"/><div id="completeT" class="rightCol rightColP"><div class="rightCol1"><div class="text1 title">Example Title</div><div class="text2 subtitle">Example Subtitle</div><div class="parag paragP">Example Text</div></div><a id="completeC" href="completeC"><button id="completeC1" style="background-color:#0d1121" class="button buttonP">Complete</button></a></div></div>
+        <div id="template" class="root base"><img alt="background" style="background-image:url()" src="https://firebasestorage.googleapis.com/v0/b/vinci-dev-6e577.appspot.com/o/default-logo%2FleftLogo.png?alt=media" class="BrandLogo image"/><div id="completeT" class="rightCol rightColP"><div class="rightCol1"><div class="text1 title">Example Title123</div><div class="text2 subtitle">Example Subtitle</div><div class="parag paragP">Example Text</div></div><a id="completeC" href="completeC"><button id="completeC" style="background-color:#0d1121" class="button buttonP">Complete</button></a></div></div>
     </body>
 </html>
