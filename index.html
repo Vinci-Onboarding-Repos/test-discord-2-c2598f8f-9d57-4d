@@ -40,13 +40,18 @@
             addxptopath();
         }
         if(document.querySelector("#completeC") !== null){
-          console.log("false")
-          console.log(event)
-          document.querySelector("#completeC").addEventListener("click", function(e){
-            confettiComplete(event, emoji, completeMessage)
-            e.preventDefault();
-            return false;
-          });
+            let emoji = null;
+            if(emoji !== null){
+                emoji = [emoji];
+            }else{
+                emoji = null;
+            }
+            const completeMessage = "Olaaa";
+            document.querySelector("#completeC").addEventListener("click", function(e){
+                confettiComplete(event, emoji, completeMessage)
+                e.preventDefault();
+                return false;
+            });
         }
         
     });
