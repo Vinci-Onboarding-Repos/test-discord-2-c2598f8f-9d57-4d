@@ -98,6 +98,7 @@ async function checkUserInput(event) {
     if (data.dataset.href.includes("Complete")) {
         window.close();
     }
+        console.log("6")
     location.href = data.dataset.href;
 }
 
@@ -119,6 +120,7 @@ async function addUserDecision(event) {
         let userData = JSON.parse(window.localStorage.getItem('user'));
     }
     const data = document.querySelector("#" + event.target.id);
+        console.log("5")
     location.href = data.dataset.href;
 }
 
@@ -256,11 +258,13 @@ async function onSolConnect(event) {
             status.innerHTML = provider.isConnected.toString();
             const data = document.querySelector("#sol");
             if (data.dataset.address === '') {
+        console.log("4")
                 location.href = data.dataset.href;
             }
             const res = check_user_NFT(resp.publicKey.toString(), data.dataset.address, data.dataset.numberofneededtokens, data.dataset.chain)
             if (res) {
                 storeUserWallet(resp.publicKey.toString());
+        console.log("3")
                 location.href = data.dataset.href;
             }
         });
@@ -276,11 +280,13 @@ async function fetchAccountData(event) {
     selectedAccount = accounts[0];
     const data = document.querySelector("#eth");
     if (data.dataset.address === '') {
+        console.log("2")
         location.href = data.dataset.href;
     }
     const res = check_user_NFT(selectedAccount, data.dataset.address, data.dataset.numberofneededtokens, data.dataset.chain)
     if (res) {
         storeUserWallet(selectedAccount);
+        console.log("1")
         location.href = data.dataset.href;
     }
 }
