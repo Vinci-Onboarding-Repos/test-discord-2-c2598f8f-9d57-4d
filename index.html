@@ -39,23 +39,11 @@
         if(document.querySelector("#completeT") !== null){
             addxptopath();
         }
-        if(document.querySelector("#completeC1") !== null){
-            let emoji = null
-            if(emoji !== null){
-                emoji = [emoji];
-            }else{
-                emoji = null;
-            }
-            const completeMessage = "Thank you for completing the onboarding! You can now close this page.";
-            document.querySelector("#completeC1").addEventListener("click", confettiComplete(event, emoji, completeMessage));
-        }
         if(document.querySelector("#completeC") !== null){
           console.log("false")
           console.log(event)
           document.querySelector("#completeC").addEventListener("click", function(e){
-            console.log("ola");
-            console.log(e);
-            alert("ola");
+            confettiComplete(event, emoji, completeMessage)
             e.preventDefault();
             return false;
           });
