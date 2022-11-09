@@ -357,7 +357,7 @@ async function addxptopath() {
     const data = document.querySelector("#Complete");
     let xpValue = 100;
 
-    if (data !== undefined && data.dataset !== undefined  && data.dataset.xp !== undefined){
+    if (data !== null && data.dataset !== null  && data.dataset.xp !== null){
         xpValue = data.dataset.xp;
     }
 
