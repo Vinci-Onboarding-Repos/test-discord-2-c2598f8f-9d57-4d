@@ -66,8 +66,6 @@ async function checkUserInput(event) {
             }
         }
     }
-    console.log(window.localStorage.getItem('user'))
-    console.log(new Date().getTime() < window.localStorage.getItem('user').expiry)
     if (window.localStorage.getItem('user') !== null && new Date().getTime() >= window.localStorage.getItem('user').expiry) {
         let userData = JSON.parse(window.localStorage.getItem('user'));
         let merged = { ...userData, ...allIds };
