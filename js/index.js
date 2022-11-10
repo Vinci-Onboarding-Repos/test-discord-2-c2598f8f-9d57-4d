@@ -73,11 +73,12 @@ async function checkUserInput(event) {
         console.log(userData)
         console.log(allIds)
         window.localStorage.setItem('user', JSON.stringify(merged));
+        let userDataF = JSON.parse(window.localStorage.getItem('user'));
         var pathArray = window.location.pathname.split('/');
         axios.post(BASE_URL + '/updateuseronboarding', {
             projectId: pathArray[1],
             requestURL: window.location.href,
-            userData: merged,
+            userData: userDataF,
             API_KEY: 'VINCI_DEV_6E577'
         });
     } else {
