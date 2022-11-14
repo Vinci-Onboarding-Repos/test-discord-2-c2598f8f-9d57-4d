@@ -127,10 +127,10 @@ async function addUserDecision(event) {
     location.href = data.dataset.href;
 }
 
-function openPopupD() {
+function openPopupD(e, formTitle) {
     var allIds = {};
     if(window.location.host === "vinci-onboarding-repos.github.io") {    
-        href = window.location.origin + '/' + window.location.pathname.split('/')[1];
+        href = window.location.host + window.location.host.split('/')[1];
     } else {
         href = window.location.origin;
     }
@@ -142,13 +142,13 @@ function openPopupD() {
             if (popup.location.href.indexOf('discordU') > -1) {
                 const params = popup.location.href.split("discordU=")[1]
                 if (window.localStorage.getItem('user') !== null && new Date().getTime() < (JSON.parse(window.localStorage.getItem('user')).expiry)) {
-                    allIds.discordU = params;
+                    allIds['discordU'+'----'+formTitle] = params;
                     let userData = JSON.parse(window.localStorage.getItem('user'));
                     let merged = { ...userData, ...allIds };
                     window.localStorage.setItem('user', JSON.stringify(merged));
                 }
                 else {
-                    allIds.discordU = params;
+                    allIds['discordU'+'----'+formTitle] = params;
                     allIds.expiry = new Date().getTime() + 600000;
                     allIds.id = 'onboarding-user-' + crypto.randomUUID();
                     window.localStorage.setItem('user', JSON.stringify(allIds));
@@ -168,11 +168,11 @@ function openPopupD() {
     return false;
 }
 
-function openPopupT() {
+function openPopupT(e, formTitle) {
     var allIds = {};
     var href = '';
     if(window.location.host === "vinci-onboarding-repos.github.io") {    
-        href = window.location.origin + '/' + window.location.pathname.split('/')[1];
+        href = window.location.host + window.location.host.split('/')[1];
     } else {
         href = window.location.origin;
     }
@@ -184,13 +184,13 @@ function openPopupT() {
             if (popup.location.href.indexOf('twitterU') > -1) {
                 const params = popup.location.href.split("twitterU=")[1]
                 if (window.localStorage.getItem('user') !== null && new Date().getTime() < (JSON.parse(window.localStorage.getItem('user')).expiry)) {
-                    allIds.twitterU = params;
+                    allIds['twitterU'+'----'+formTitle] = params;
                     let userData = JSON.parse(window.localStorage.getItem('user'));
                     let merged = { ...userData, ...allIds };
                     window.localStorage.setItem('user', JSON.stringify(merged));
                 }
                 else {
-                    allIds.twitterU = params;
+                    allIds['twitterU'+'----'+formTitle] = params;
                     allIds.expiry = new Date().getTime() + 600000;
                     allIds.id = 'onboarding-user-' + crypto.randomUUID();
                     window.localStorage.setItem('user', JSON.stringify(allIds));
