@@ -16,12 +16,12 @@
         for (var i = 0, n = allElements.length; i < n; ++i) {
             var el = allElements[i];
             var result = ignore.filter(function(item){
-                return item.indexOf(el.id) > -1;            
+                return item.indexOf(el.id.split('----')[0]) > -1;            
             });
             console.log(el.id);
             console.log(result);
             console.log("result");
-            if (result) {
+            if (result.length === 0) {
                 console.log(el.id);
                 if (el.id && el.tagName === "BUTTON") {
                     document.querySelector("#" + el.id).addEventListener("click", addUserDecision);
