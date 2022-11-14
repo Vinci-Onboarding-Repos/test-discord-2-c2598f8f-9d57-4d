@@ -24,8 +24,40 @@
         if(document.querySelector("#eth") !== null){
             document.querySelector("#eth").addEventListener("click", onConnect);
         }
-        if(document.querySelector("#inputNext") !== null){
-            document.querySelector("#inputNext").addEventListener("click", checkUserInput);
+        if(document.querySelector("#inputNext") !== null && document.querySelector("#completeC") !== null){
+            document.querySelector("#inputNext").addEventListener("click", checkUserInputComplete);
+            if(document.querySelector("#completeC") !== null){
+                let emoji = null
+                if(emoji !== null){
+                    emoji = [emoji];
+                }else{
+                    emoji = null;
+                }
+                const completeMessage = "Thank you for completing the onboarding! You can now close this page.";
+                document.querySelector("#completeC").addEventListener("click", function(e){
+                    confettiComplete(event, emoji, completeMessage)
+                    e.preventDefault();
+                    return false;
+                });
+            }
+        }else{
+            if(document.querySelector("#inputNext") !== null){
+                document.querySelector("#inputNext").addEventListener("click", checkUserInput);
+            }
+            if(document.querySelector("#completeC") !== null){
+                let emoji = null
+                if(emoji !== null){
+                    emoji = [emoji];
+                }else{
+                    emoji = null;
+                }
+                const completeMessage = "Thank you for completing the onboarding! You can now close this page.";
+                document.querySelector("#completeC").addEventListener("click", function(e){
+                    confettiComplete(event, emoji, completeMessage)
+                    e.preventDefault();
+                    return false;
+                });
+            }
         }
         if(document.querySelector("#sol") !== null){
             document.querySelector("#sol").addEventListener("click", onSolConnect);
@@ -38,20 +70,6 @@
         }
         if(document.querySelector("#completeT") !== null){
             addxptopath();
-        }
-        if(document.querySelector("#completeC") !== null){
-            let emoji = null
-            if(emoji !== null){
-                emoji = [emoji];
-            }else{
-                emoji = null;
-            }
-            const completeMessage = "Thank you for completing the onboarding! You can now close this page.";
-            document.querySelector("#completeC").addEventListener("click", function(e){
-                confettiComplete(event, emoji, completeMessage)
-                e.preventDefault();
-                return false;
-            });
         }
         
     });
