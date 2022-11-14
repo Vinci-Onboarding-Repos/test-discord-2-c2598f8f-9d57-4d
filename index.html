@@ -63,13 +63,13 @@
         if(document.querySelector("#sol") !== null){
             document.querySelector("#sol").addEventListener("click", onSolConnect);
         }
-        if(document.querySelector(".InputDiscord") !== null){
-            document.querySelector(".InputDiscord").addEventListener("click", function(e){
+        if(document.querySelector("button[id*='discord']") !== null){
+            document.querySelector("button[id*='discord']").addEventListener("click", function(e){
                 openPopupD(e, formTitle);
             });
         }
-        if(document.querySelector(".InputTwitter") !== null){
-            document.querySelector(".InputTwitter").addEventListener("click", function(e){
+        if(document.querySelector("button[id*='twitter']") !== null){
+            document.querySelector("button[id*='twitter']").addEventListener("click", function(e){
                 openPopupT(e, formTitle);
             });
         }
