@@ -190,7 +190,6 @@ function openPopupD(e, formTitle) {
         if (popup.location.href !== undefined) {
             if (popup.location.href.indexOf('discordU') > -1) {
                 const params = popup.location.href.split("discordU=")[1]
-                cons
                 if (window.localStorage.getItem('user') !== null && new Date().getTime() < (JSON.parse(window.localStorage.getItem('user')).expiry)) {
                     allIds['discordU----'+formTitle] = params;
                     let userData = JSON.parse(window.localStorage.getItem('user'));
