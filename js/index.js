@@ -428,32 +428,27 @@ async function addxptopath() {
         xpValue = data.dataset.xp;
     }
 
+    var allIds = {};
     if (window.localStorage.getItem('user') === null) {
-        var allIds = {};
         allIds.id = 'onboarding-user-' + crypto.randomUUID();
+        allIds.xp = parseInt(xpValue);
         window.localStorage.setItem('user', JSON.stringify(allIds));
+    }else{
+        allIds.xp = parseInt(xpValue);
+        let userData = JSON.parse(window.localStorage.getItem('user'));
+        let merged = { ...userData, ...allIds };
+        window.localStorage.setItem('user', JSON.stringify(merged));
     }
-    console.log(page)
-
     var pathArray = window.location.pathname.split('/');
-    axios.post(BASE_URL + '/changeuserxpbasedonpath', {
-        path: page,
-        projectId: projectId,
-        xp: xpValue,
-        API_KEY: 'VINCI_DEV_6E577',
-        userData: JSON.parse(window.localStorage.getItem('user')).id,
-        add: true,
-    });
+}
 
+
+function confettiComplete(event, emoji, completeMessage) {
     axios.post(BASE_URL + '/changeuseronboardingcompletion', {
         projectId: projectId,
         API_KEY: 'VINCI_DEV_6E577',
         userData: JSON.parse(window.localStorage.getItem('user')).id,
     });
-}
-
-
-function confettiComplete(event, emoji, completeMessage) {
     if(event.type !== 'click') {
         return;
     }
