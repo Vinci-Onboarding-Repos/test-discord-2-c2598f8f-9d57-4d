@@ -129,13 +129,18 @@ async function addUserDecision(event) {
 
 function openPopupD() {
     var allIds = {};
-    var popup = window.open(BASE_API_URL + '/routes/discord/auth?original=' + window.location.href, '', "width=400, height=400");
+    if(window.location.host === "vinci-onboarding-repos.github.io") {    
+        href = window.location.host + window.location.host.split('/')[1];
+    } else {
+        href = window.location.origin;
+    }
+    var popup = window.open(BASE_API_URL + '/routes/discord/auth?original=' + href, '', "width=400, height=400");
 
     var popupTick = setInterval(function () {
         if (popup.location.href !== undefined) {
             if (popup.location.href.indexOf('discordU') > -1) {
                 const params = popup.location.href.split("discordU=")[1]
-                if (window.localStorage.getItem('user') !== null && new Date().getTime() >= window.localStorage.getItem('user').expiry) {
+                if (window.localStorage.getItem('user') !== null && new Date().getTime() < (JSON.parse(window.localStorage.getItem('user')).expiry)) {
                     allIds.discordU = params;
                     let userData = JSON.parse(window.localStorage.getItem('user'));
                     let merged = { ...userData, ...allIds };
@@ -164,13 +169,19 @@ function openPopupD() {
 
 function openPopupT() {
     var allIds = {};
-    var popup = window.open(BASE_API_URL + '/routes/twitter/auth/twitter1?original=' + window.location.href, '', "width=400, height=400");
+    var href = '';
+    if(window.location.host === "vinci-onboarding-repos.github.io") {    
+        href = window.location.host + window.location.host.split('/')[1];
+    } else {
+        href = window.location.origin;
+    }
+    var popup = window.open(BASE_API_URL + '/routes/twitter/auth/twitter1?original=' + href, '', "width=400, height=400");
 
     var popupTick = setInterval(function () {
         if (popup.location.href !== undefined) {
             if (popup.location.href.indexOf('twitterU') > -1) {
                 const params = popup.location.href.split("twitterU=")[1]
-                if (window.localStorage.getItem('user') !== null && new Date().getTime() >= window.localStorage.getItem('user').expiry) {
+                if (window.localStorage.getItem('user') !== null && new Date().getTime() < (JSON.parse(window.localStorage.getItem('user')).expiry)) {
                     allIds.twitterU = params;
                     let userData = JSON.parse(window.localStorage.getItem('user'));
                     let merged = { ...userData, ...allIds };
