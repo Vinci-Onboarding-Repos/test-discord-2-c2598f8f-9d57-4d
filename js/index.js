@@ -9,7 +9,7 @@ const Web3Modal = window.Web3Modal.default;
 const WalletConnectProvider = window.WalletConnectProvider.default;
 const Fortmatic = window.Fortmatic;
 const evmChains = window.evmChains;
-const ignore = ["WEB3_CONNECT_MODAL_ID", "template", "inputNext", "eth", "sol", "error-text"];
+const ignore = ["WEB3_CONNECT_MODAL_ID", "template", "inputNext", "eth", "sol", "error-text", "discordU", "twitterU", "linkedTwitter", "linkedDiscord", "but", "complete",  "completeC", "completeT",  "completeC1"];
 
 const fetchUsers = () => {
     axios.get(BASE_URL, {
@@ -40,7 +40,7 @@ const logPageView = async () => {
 }
 
 const storeUserWallet = async (selectedWallet) => {
-    if (window.localStorage.getItem('user') !== null && new Date().getTime() >= window.localStorage.getItem('user').expiry) {
+    if (window.localStorage.getItem('user') !== null && new Date().getTime() < (JSON.parse(window.localStorage.getItem('user')).expiry)) {
         let userData = JSON.parse(window.localStorage.getItem('user'));
         console.log(userData)
         userData.wallet = selectedWallet;
@@ -60,18 +60,19 @@ async function checkUserInput(event) {
     var allIds = {};
     for (var i = 0, n = allElements.length; i < n; ++i) {
         var el = allElements[i];
-        if (!ignore.includes(el.id)) {
-            if (el.id) {
-                allIds[el.id.toString()] = el.value;
+        var result = ignore.filter(function(item){
+            return item.indexOf(el.id.split('----')[0]) > -1;            
+        });
+        if (result.length === 0) {
+            if (el.id && el.tagName === "BUTTON") {
+                document.querySelector("#" + el.id).addEventListener("click", addUserDecision);
             }
         }
     }
-    
+
     if (window.localStorage.getItem('user') !== null && new Date().getTime() < (JSON.parse(window.localStorage.getItem('user')).expiry)) {
         let userData = JSON.parse(window.localStorage.getItem('user'));
         let merged = { ...userData, ...allIds };
-        console.log(userData)
-        console.log(allIds)
         window.localStorage.setItem('user', JSON.stringify(merged));
         let userDataF = JSON.parse(window.localStorage.getItem('user'));
         var pathArray = window.location.pathname.split('/');
@@ -101,13 +102,62 @@ async function checkUserInput(event) {
     if (data.dataset.href.includes("Complete")) {
         window.close();
     }
-        console.log("6")
     location.href = data.dataset.href;
+}
+
+async function checkUserInputComplete(event) {
+    event.preventDefault();
+    var allElements = document.querySelectorAll('*[id]');
+    var allIds = {};
+    for (var i = 0, n = allElements.length; i < n; ++i) {
+        var el = allElements[i];
+        var result = ignore.filter(function(item){
+            return item.indexOf(el.id.split('----')[0]) > -1;            
+        });
+        if (result.length === 0) {
+            if (el.id && el.tagName === "BUTTON") {
+                document.querySelector("#" + el.id).addEventListener("click", addUserDecision);
+            }
+        }
+    }
+
+    if (window.localStorage.getItem('user') !== null && new Date().getTime() < (JSON.parse(window.localStorage.getItem('user')).expiry)) {
+        let userData = JSON.parse(window.localStorage.getItem('user'));
+        let merged = { ...userData, ...allIds };
+        window.localStorage.setItem('user', JSON.stringify(merged));
+        let userDataF = JSON.parse(window.localStorage.getItem('user'));
+        var pathArray = window.location.pathname.split('/');
+        axios.post(BASE_URL + '/updateuseronboarding', {
+            projectId: pathArray[1],
+            requestURL: window.location.href,
+            userData: userDataF,
+            API_KEY: 'VINCI_DEV_6E577'
+        });
+    } else {
+        const countryR = await country();
+        allIds.country = countryR.country;
+        allIds.id = 'onboarding-user-' + crypto.randomUUID();
+        allIds.expiry = new Date().getTime() + 600000;
+        window.localStorage.setItem('user', JSON.stringify(allIds));
+        let userData = JSON.parse(window.localStorage.getItem('user'));
+        var pathArray = window.location.pathname.split('/');
+        axios.post(BASE_URL + '/adduseronboarding', {
+            projectId: pathArray[1],
+            requestURL: window.location.href,
+            userData: userData,
+            API_KEY: 'VINCI_DEV_6E577'
+        });
+    }
+
+    const data = document.querySelector("#inputNext");
+    if (data.dataset.href.includes("Complete")) {
+        window.close();
+    }
 }
 
 async function addUserDecision(event) {
     event.preventDefault();
-    if (window.localStorage.getItem('user') !== null && new Date().getTime() >= window.localStorage.getItem('user').expiry) {
+    if (window.localStorage.getItem('user') !== null && new Date().getTime() < (JSON.parse(window.localStorage.getItem('user')).expiry)) {
         let userData = JSON.parse(window.localStorage.getItem('user'));
         let merged = { ...userData, ...{ type: event.target.id } };
         window.localStorage.setItem('user', JSON.stringify(merged));
@@ -123,13 +173,12 @@ async function addUserDecision(event) {
         let userData = JSON.parse(window.localStorage.getItem('user'));
     }
     const data = document.querySelector("#" + event.target.id);
-        console.log("5")
     location.href = data.dataset.href;
 }
 
 function openPopupD(e, formTitle) {
     var allIds = {};
-    if(window.location.host === "vinci-onboarding-repos.github.io") {
+    if(window.location.host === "vinci-onboarding-repos.github.io") {    
         href = window.location.origin + '/' + window.location.pathname.split('/')[1];
     } else {
         href = window.location.origin;
@@ -141,14 +190,15 @@ function openPopupD(e, formTitle) {
         if (popup.location.href !== undefined) {
             if (popup.location.href.indexOf('discordU') > -1) {
                 const params = popup.location.href.split("discordU=")[1]
+                cons
                 if (window.localStorage.getItem('user') !== null && new Date().getTime() < (JSON.parse(window.localStorage.getItem('user')).expiry)) {
-                    allIds['discordU'+'----'+formTitle] = params;
+                    allIds['discordU----'+formTitle] = params;
                     let userData = JSON.parse(window.localStorage.getItem('user'));
                     let merged = { ...userData, ...allIds };
                     window.localStorage.setItem('user', JSON.stringify(merged));
                 }
                 else {
-                    allIds['discordU'+'----'+formTitle] = params;
+                    allIds['discordU----'+formTitle] = params;
                     allIds.expiry = new Date().getTime() + 600000;
                     allIds.id = 'onboarding-user-' + crypto.randomUUID();
                     window.localStorage.setItem('user', JSON.stringify(allIds));
@@ -171,7 +221,7 @@ function openPopupD(e, formTitle) {
 function openPopupT(e, formTitle) {
     var allIds = {};
     var href = '';
-    if(window.location.host === "vinci-onboarding-repos.github.io") {
+    if(window.location.host === "vinci-onboarding-repos.github.io") {    
         href = window.location.origin + '/' + window.location.pathname.split('/')[1];
     } else {
         href = window.location.origin;
@@ -274,13 +324,11 @@ async function onSolConnect(event) {
             status.innerHTML = provider.isConnected.toString();
             const data = document.querySelector("#sol");
             if (data.dataset.address === '') {
-        console.log("4")
                 location.href = data.dataset.href;
             }
             const res = check_user_NFT(resp.publicKey.toString(), data.dataset.address, data.dataset.numberofneededtokens, data.dataset.chain)
             if (res) {
                 storeUserWallet(resp.publicKey.toString());
-        console.log("3")
                 location.href = data.dataset.href;
             }
         });
@@ -296,13 +344,11 @@ async function fetchAccountData(event) {
     selectedAccount = accounts[0];
     const data = document.querySelector("#eth");
     if (data.dataset.address === '') {
-        console.log("2")
         location.href = data.dataset.href;
     }
     const res = check_user_NFT(selectedAccount, data.dataset.address, data.dataset.numberofneededtokens, data.dataset.chain)
     if (res) {
         storeUserWallet(selectedAccount);
-        console.log("1")
         location.href = data.dataset.href;
     }
 }
@@ -376,7 +422,7 @@ async function addxptopath() {
     const page = pathList[pathList.length - 1] == projectId ?
         "index" : pathList[pathList.length - 1];
 
-    const data = document.querySelector("#Complete");
+    const data = document.querySelector("#completeT");
     let xpValue = 100;
 
     if (data !== null && data.dataset !== null  && data.dataset.xp !== null){
@@ -407,60 +453,12 @@ async function addxptopath() {
     });
 }
 
-async function checkUserInputComplete(event) {
-    event.preventDefault();
-    var allElements = document.querySelectorAll('*[id]');
-    var allIds = {};
-    for (var i = 0, n = allElements.length; i < n; ++i) {
-        var el = allElements[i];
-        if (!ignore.includes(el.id)) {
-            if (el.id) {
-                allIds[el.id.toString()] = el.value;
-            }
-        }
-    }
-
-    if (window.localStorage.getItem('user') !== null && new Date().getTime() < (JSON.parse(window.localStorage.getItem('user')).expiry)) {
-        let userData = JSON.parse(window.localStorage.getItem('user'));
-        let merged = { ...userData, ...allIds };
-        window.localStorage.setItem('user', JSON.stringify(merged));
-        let userDataF = JSON.parse(window.localStorage.getItem('user'));
-        var pathArray = window.location.pathname.split('/');
-        axios.post(BASE_URL + '/updateuseronboarding', {
-            projectId: pathArray[1],
-            requestURL: window.location.href,
-            userData: userDataF,
-            API_KEY: 'VINCI_DEV_6E577'
-        });
-    } else {
-        const countryR = await country();
-        allIds.country = countryR.country;
-        allIds.id = 'onboarding-user-' + crypto.randomUUID();
-        allIds.expiry = new Date().getTime() + 600000;
-        window.localStorage.setItem('user', JSON.stringify(allIds));
-        let userData = JSON.parse(window.localStorage.getItem('user'));
-        var pathArray = window.location.pathname.split('/');
-        axios.post(BASE_URL + '/adduseronboarding', {
-            projectId: pathArray[1],
-            requestURL: window.location.href,
-            userData: userData,
-            API_KEY: 'VINCI_DEV_6E577'
-        });
-    }
-
-    const data = document.querySelector("#inputNext");
-    if (data.dataset.href.includes("Complete")) {
-        window.close();
-    }
-}
-
 
 function confettiComplete(event, emoji, completeMessage) {
-    console.log(event.type)
     if(event.type !== 'click') {
         return;
     }
-    console.log(event.type)
+    console.log(event)
     event.preventDefault();
     alert(completeMessage);
     const jsConfetti = new JSConfetti();
@@ -480,4 +478,3 @@ init();
 window.addEventListener('load', async () => {
     init();
 });
-
