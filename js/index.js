@@ -134,6 +134,7 @@ function openPopupD() {
     } else {
         href = window.location.origin;
     }
+    console.log(href);
     var popup = window.open(BASE_API_URL + '/routes/discord/auth?original=' + href, '', "width=400, height=400");
 
     var popupTick = setInterval(function () {
@@ -175,6 +176,7 @@ function openPopupT() {
     } else {
         href = window.location.origin;
     }
+    console.log(href);
     var popup = window.open(BASE_API_URL + '/routes/twitter/auth/twitter1?original=' + href, '', "width=400, height=400");
 
     var popupTick = setInterval(function () {
