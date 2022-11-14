@@ -11,18 +11,14 @@
   <script>
     window.addEventListener('load', async () => {
         const formTitle = "input_1_0";
-        const ignore = ["WEB3_CONNECT_MODAL_ID", "template", "inputNext", "eth", "sol", "error-text", "discord", "twitter", "linkedTwitter", "linkedDiscord", "but", "complete",  "completeC", "completeT",  "completeC1"];
+        const ignore = ["WEB3_CONNECT_MODAL_ID", "template", "inputNext", "eth", "sol", "error-text", "discordU", "twitterU", "linkedTwitter", "linkedDiscord", "but", "complete",  "completeC", "completeT",  "completeC1"];
         var allElements = document.querySelectorAll('*[id]');
         for (var i = 0, n = allElements.length; i < n; ++i) {
             var el = allElements[i];
             var result = ignore.filter(function(item){
                 return item.indexOf(el.id.split('----')[0]) > -1;            
             });
-            console.log(el.id);
-            console.log(result);
-            console.log("result");
             if (result.length === 0) {
-                console.log(el.id);
                 if (el.id && el.tagName === "BUTTON") {
                     document.querySelector("#" + el.id).addEventListener("click", addUserDecision);
                 }
