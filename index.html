@@ -16,6 +16,7 @@
         for (var i = 0, n = allElements.length; i < n; ++i) {
             var el = allElements[i];
             if (!ignore.includes(el.id)) {
+                console.log(el.id);
                 if (el.id && el.tagName === "BUTTON") {
                     document.querySelector("#" + el.id).addEventListener("click", addUserDecision);
                 }
