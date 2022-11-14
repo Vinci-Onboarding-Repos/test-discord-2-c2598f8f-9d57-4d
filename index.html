@@ -15,12 +15,13 @@
         var allElements = document.querySelectorAll('*[id]');
         for (var i = 0, n = allElements.length; i < n; ++i) {
             var el = allElements[i];
-            if (!ignore.includes(el.id)) {
+            ignore.foreach((id) => {
                 console.log(el.id);
-                if (el.id && el.tagName === "BUTTON") {
+                if (!id.includes(el.id) && el.id && el.tagName === "BUTTON") {
+                    console.log(el.id);
                     document.querySelector("#" + el.id).addEventListener("click", addUserDecision);
                 }
-            }
+            });
         }
         init(); 
         if(document.querySelector("#eth") !== null){
