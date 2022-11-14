@@ -18,6 +18,8 @@
             var result = ignore.filter(function(item){
                 return item.indexOf(el.id.split('----')[0]) > -1;            
             });
+          console.log(result)
+          console.log(el)
             if (result.length === 0) {
                 if (el.id && el.tagName === "BUTTON") {
                     document.querySelector("#" + el.id).addEventListener("click", addUserDecision);
