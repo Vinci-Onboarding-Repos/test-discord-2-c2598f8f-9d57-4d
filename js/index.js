@@ -9,7 +9,7 @@ const Web3Modal = window.Web3Modal.default;
 const WalletConnectProvider = window.WalletConnectProvider.default;
 const Fortmatic = window.Fortmatic;
 const evmChains = window.evmChains;
-const ignore = ["WEB3_CONNECT_MODAL_ID", "template", "inputNext", "eth", "sol", "error-text", "discordU", "twitterU", "linkedTwitter", "linkedDiscord", "but", "complete",  "completeC", "completeT",  "completeC1"];
+const ignore = ["#", "WEB3_CONNECT_MODAL_ID", "template", "inputNext", "eth", "sol", "error-text", "discordU", "twitterU", "linkedTwitter", "linkedDiscord", "but", "complete",  "completeC", "completeT",  "completeC1"];
 
 const fetchUsers = () => {
     axios.get(BASE_URL, {
@@ -64,8 +64,8 @@ async function checkUserInput(event) {
             return item.indexOf(el.id.split('----')[0]) > -1;            
         });
         if (result.length === 0) {
-            if (el.id && el.tagName === "BUTTON") {
-                document.querySelector("#" + el.id).addEventListener("click", addUserDecision);
+            if (el.id) {
+                allIds[el.id.toString()] = el.value;
             }
         }
     }
@@ -115,8 +115,8 @@ async function checkUserInputComplete(event) {
             return item.indexOf(el.id.split('----')[0]) > -1;            
         });
         if (result.length === 0) {
-            if (el.id && el.tagName === "BUTTON") {
-                document.querySelector("#" + el.id).addEventListener("click", addUserDecision);
+            if (el.id) {
+                allIds[el.id.toString()] = el.value;
             }
         }
     }
