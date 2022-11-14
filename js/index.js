@@ -403,7 +403,12 @@ async function check_user_NFT(user_address, token_address, amount, network_name)
 
 }
 
+
 async function addxptopath() {
+}
+
+
+function confettiComplete(event, emoji, completeMessage) {
     event.preventDefault();
     var projectId = window.location.pathname.split('/')[1];
     var url = window.location.href;
@@ -439,7 +444,7 @@ async function addxptopath() {
     axios.post(BASE_URL + '/changeuserxpbasedonpath', {
         path: page,
         projectId: projectId,
-        xp: xpValue,
+        xp: parseInt(xpValue),
         API_KEY: 'VINCI_DEV_6E577',
         userData: JSON.parse(window.localStorage.getItem('user')).id,
         add: true,
@@ -450,10 +455,7 @@ async function addxptopath() {
         API_KEY: 'VINCI_DEV_6E577',
         userData: JSON.parse(window.localStorage.getItem('user')).id,
     });
-}
 
-
-function confettiComplete(event, emoji, completeMessage) {
     if(event.type !== 'click') {
         return;
     }
